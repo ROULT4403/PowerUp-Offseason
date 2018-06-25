@@ -12,8 +12,8 @@ public class Elevator extends Subsystem {
 	Spark motorelevador = new Spark(RobotMap.elevadorPort);
 
 	// Velocidades elevador 
-	private static double speedUp = -0.65;
-	private static double speedDown = 0.6;
+	private static double speedUp = -0.5;
+	private static double speedDown = 0.3;
 
 	public void initDefaultCommand() {
 		//No default command

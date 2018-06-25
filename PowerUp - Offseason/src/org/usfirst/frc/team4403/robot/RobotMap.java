@@ -20,10 +20,10 @@ public class RobotMap {
     public static int elevadorPort = 2;
     
     //PCM
-    public static int armReverse = 0;
-    public static int armForward = 2;
-    public static int rightReverse = 1;
-    public static int rightForward = 3;
+    public static int armReverse = 1;
+    public static int armForward = 3;
+    public static int rightReverse = 0;
+    public static int rightForward = 2;
     
     //Puertos usb 
     public static int navigatorPort = 0;

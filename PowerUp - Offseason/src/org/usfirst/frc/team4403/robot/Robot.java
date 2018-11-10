@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4403.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team4403.robot.subsystems.Rollers;
  */
 public class Robot extends IterativeRobot {
 	
+	
 	//Subsystems
 	public static Drivetrain drivetrain;
 	public static Rollers rollers;
@@ -33,6 +35,7 @@ public class Robot extends IterativeRobot {
     
     //auto command to be run
     Command autonomousCommand;
+    Timer timer = new Timer();
 
     /**
      * Function that runs when the robot is on for the first time
@@ -51,9 +54,13 @@ public class Robot extends IterativeRobot {
     	//Create chooser
     	autoChooser = new SendableChooser();
     	
+    
 
     	//Add chooser to the smart dashboard
     	SmartDashboard.putData("AUTO MODE CHOOSER", autoChooser);
+    	//drivetrain.m_gyro.calibrate();
+    	
+    	
     }
     
 	
@@ -63,19 +70,26 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         //get the command from the chooser
-    	autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null) autonomousCommand.start();
+    	drivetrain.TankDrive();
+    	timer.start();
+    	
+    	
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+    	if (timer.get() <5) {
+    	drivetrain.autoGo();
+    	}
+    	else if(timer.get()>5 && timer.get()<10) {
+    	drivetrain.Spin();
+    	}
     }
 
     public void teleopInit() {
-    	comp = new Compressor(0);
+    
     	
     	
     	
@@ -95,12 +109,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	//Run scheduler to run commands
-        Scheduler.getInstance().run();
-        if (comp.getPressureSwitchValue()) {
-    		comp.stop();
-    		} else {
-    		comp.start();
-    		}
+       
     }
 	
     /**
